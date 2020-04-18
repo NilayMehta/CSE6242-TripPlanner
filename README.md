@@ -1,16 +1,21 @@
 # CSE6242-TripPlanner
-To run make sure you have packages specified in the requirments.txt file. If you do not use the following pip command to install files
+I would recommend using a virutal env to run the project, but it's not required. To run it inside of a virtual env, follow these steps:
+1. run 'python3 -m venv venv'
+2. run 'source venv/bin/activate' to activate virtual env (this works on Mac OSX, for windows I think its 'venv\Scripts\activate')
+3. run 'pip install -r requirements.txt'
+4. run 'python app.py'
+
+Without a virtual environment, all you need to do is run 
 ```
 pip install -r requirements.txt
-```
-<h2>TSP API</h2>
-To run the api use the following command
-
-```
-python api_TSP.py
+python app.py
 ```
 
 This will open a server on http://127.0.0.1:5000/<br />
+
+TSP stuff has been moved to util.py
+
+TSP Readme Section from before:
 
 To send request to TSP api you do the following:<br />
 Send a GET request to the following resource<br />
