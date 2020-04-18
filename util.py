@@ -6,15 +6,9 @@ import requests
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
-# Create some test data for our catalog in the form of a list of dictionaries.
 my_API_key = "AIzaSyC0krOZZt0doCgSlAL0m75wxnq1GCIu5Tg"
 
-@app.route('/', methods=['GET'])
-def home():
-    return '''<h1>Distant Reading Archive</h1>
-<p>A prototype API for distant reading of science fiction novels.</p>'''
-
-@app.route('/api/v1/TSP', methods=['GET'])
+# @app.route('/api/v1/TSP', methods=['GET'])
 def api_tsp():
     # Check if an ID was provided as part of the URL.
     # If ID is provided, assign it to a variable.
@@ -71,5 +65,3 @@ def api_tsp():
     # Use the jsonify function from Flask to convert our list of
     # Python dictionaries to the JSON format.
     return jsonify(results)
-
-app.run()

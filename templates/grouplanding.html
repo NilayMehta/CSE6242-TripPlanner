@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1>{{ app_data['transition'] }}</h1>
+
+<!--    <p class="lead">basic<br> as <br> hell</p>-->
+
+
+<div class="group-form">
+      <h2 style = "text-align: center;">Group Form</h2>
+
+      {% for message in form.groupName.errors %}
+         <div>{{ message }}</div>
+      {% endfor %}
+
+      <form action = "/grouplanding" method = post>
+          {{ form.hidden_tag() }}
+         <fieldset>
+<!--            <legend>Group Form</legend>-->
+
+            <div style = font-size:20px; font-weight:bold; margin-left:150px;>
+               {{ form.groupName.label }}<br> {{ form.groupName }}
+               <br>
+               {{ form.groupSize.label }} <br> {{ form.groupSize }}
+                <br>
+               {{ form.startCity.label }} <br> {{ form.startCity }}
+                <br>
+               {{ form.distance.label }}<br> {{ form.distance }}
+                <br>
+               {{ form.duration.label }}<br> {{ form.duration }}
+                <br> <br>
+               {{ form.submit }}
+            </div>
+
+         </fieldset>
+      </form>
+
+
+</div>
+
+
+
+{% endblock %}

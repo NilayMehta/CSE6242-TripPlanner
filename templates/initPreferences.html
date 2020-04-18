@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+    <h1>Alright {{ memberInfo[memberIndex]['name'] }}!</h1>
+    <h4>Now we will ask you a few questions about your preferences below</h4>
+
+    <p class="lead">I was thinking maybe a 3 x 3 grid of different catagories they might be intersted or anothing else we can ask them for initial prefercnes for each gour here<br>
+        and then clicking next repeates process for the next member and so on ...</p>
+
+    <form action="nextMember" method="post">
+        <button type="submit" class="btn btn-outline-dark">Submit Initial Preferences</button>
+    </form>
+
+
+{% endblock %}
