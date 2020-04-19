@@ -1,12 +1,19 @@
+import math
+
 import flask
 from flask import request, jsonify
 import mlrose
 import requests
+import numpy as np
+import pandas as pd
+import random
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
 my_API_key = "AIzaSyC0krOZZt0doCgSlAL0m75wxnq1GCIu5Tg"
+
+voting_suggestions_count = 20
 
 # @app.route('/api/v1/TSP', methods=['GET'])
 def api_tsp():
@@ -65,3 +72,111 @@ def api_tsp():
     # Use the jsonify function from Flask to convert our list of
     # Python dictionaries to the JSON format.
     return jsonify(results)
+
+
+# Suggestions
+
+def compileMemberInfo(memberInfo):
+    pref_mapping = {'tourist': 0, 'museum': 1, 'amusement_park': 2, 'natural': 3, 'tour': 4, 'zoo': 5}
+    pref_vector = [0] * 6
+
+    for idx in memberInfo:
+        for pref in memberInfo[idx]['pref']:
+            if memberInfo[idx]['pref'][pref]:
+                i = pref_mapping[pref]
+                pref_vector[i] += 1
+
+    return pref_vector
+
+def prepareSuggestions(pref_vector, start_lat_lng, radius):
+    pref_mapping = {0:'tourist', 1:'museum', 2:'amusement_park', 3:'natural', 4:'tour', 5:'zoo'}
+    unit_vec = np.array(pref_vector) / float(sum(pref_vector))
+    suggestions_split = unit_vec * voting_suggestions_count
+
+    if sum(suggestions_split) < voting_suggestions_count:
+        idx = suggestions_split.index(max(suggestions_split))
+        diff = voting_suggestions_count - sum(suggestions_split)
+        suggestions_split[idx] += diff
+
+    # suggestions_split is not a vector like [5, 5, 5, 5, 0, 0] where each index is a category
+    # (that corresponds to pref_mapping) and each value (ex: 5) is how many places we need to find
+    # for the voting step
+
+    print('suggestions_split', suggestions_split)
+
+    df = read_dataset()
+    closest_idx, valid_places_idxs = find_closest_places(df, start_lat_lng, radius)
+
+    # now we have a df of all the places within our radius
+    df_valid = df.loc[valid_places_idxs, :]
+
+    matches = []
+
+    for idx, count in enumerate(suggestions_split):
+        if count > 0:
+            pref = pref_mapping[idx]
+
+            potential_matches = []
+
+            for idx_df, row in df_valid.iterrows():
+                if row[pref] == 1:
+                    potential_matches.append(idx_df)
+
+            matches.append(np.random.choice(potential_matches, int(count), replace=False))
+
+    matches = np.array(matches)
+    matches = [item for sublist in matches for item in sublist]
+    np.random.shuffle(matches)
+
+    suggestions = df_valid.loc[matches, :]
+
+    print(suggestions)
+
+    return suggestions
+
+
+def read_dataset():
+    df = pd.read_csv('assets/final_dataset_sorted.csv')
+    return df
+
+def find_closest_places(df, start_lat_lng, radius):
+    lat, lng = start_lat_lng
+    best_lat, best_lng, best_dist, best_idx = 0.0, 0.0, 999900, -1
+    valid_places = []
+    for idx, row in df.iterrows():
+        r_lat = float(row['lat'])
+        r_lng = float(row['lng'])
+        dist = latlng2miles(lat, lng, r_lat, r_lng)
+        if dist < radius:
+            valid_places.append(idx)
+            if dist < best_dist:
+                best_lat = r_lat
+                best_lng = r_lng
+                best_dist = dist
+                best_idx = idx
+
+    return best_idx, valid_places
+
+
+def latlng2miles(lat1, lng1, lat2, lng2):
+    R = 6373.0
+
+    l1 = math.radians(lat1)
+    ln1 = math.radians(lng1)
+    l2 = math.radians(lat2)
+    ln2 = math.radians(lng2)
+
+    dlon = ln2 - ln1
+    dlat = l2 - l1
+
+    a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
+    if a < 0:
+        a = 0
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    distance = R * c
+
+    conv_fac = 0.621371
+    miles = distance * conv_fac
+
+    return miles
+

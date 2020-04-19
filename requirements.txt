@@ -3,4 +3,5 @@ flask-WTF
 pandas
 mlrose
 requests
+numpy
 

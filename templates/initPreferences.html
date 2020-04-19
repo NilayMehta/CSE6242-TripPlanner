@@ -2,13 +2,128 @@
 
 {% block body %}
 
-    <h1>Alright {{ memberInfo[memberIndex]['name'] }}!</h1>
-    <h4>Now we will ask you a few questions about your preferences below</h4>
+<!--    <p class="lead">I was thinking maybe a 3 x 3 grid of different catagories they might be intersted or anothing else we can ask them for initial prefercnes for each gour here<br>-->
+<!--        and then clicking next repeates process for the next member and so on ...</p>-->
 
-    <p class="lead">I was thinking maybe a 3 x 3 grid of different catagories they might be intersted or anothing else we can ask them for initial prefercnes for each gour here<br>
-        and then clicking next repeates process for the next member and so on ...</p>
+    <div class="container">
 
-    <form action="nextMember" method="post">
+      <h1 class="font-weight-light text-center text-lg-left mt-4 mb-0">Trip Preferences</h1>
+        <h5 class="font-weight-light text-center text-lg-left mt-4 mb-0">Alright {{ memberInfo[memberIndex]['name'] }}, please select all the catagories you'd be interested in exploring!</h5>
+
+      <hr class="mt-2 mb-5">
+
+      <div class="row text-center text-lg-left">
+            <div class="col-lg-4 col-md-4 col-6">
+              <a href="#" class="d-block mb-4 h-140">
+                    <img style="width:320px;height:240px;" class="img-fluid img-thumbnail" src="https://source.unsplash.com/rnc4-Z4Zk8M" alt="">
+                  </a>
+
+                {% if not memberInfo[memberIndex]['pref']['tourist'] %}
+                <form action="/setPref/tourist" method="post">
+                    <button type="submit" class="btn btn-outline-dark">Popular Tourist Attractions</button>
+                </form>
+                {% else %}
+                <form action="/setPref/tourist" method="post">
+                    <button type="submit" class="btn btn-dark">Popular Tourist Attractions</button>
+                </form>
+<!--                <h5 class="font-weight-light text-center mt-4 mb-0">Popular Tourist Attractions</h5>-->
+                {% endif %}
+
+                <br>
+            </div>
+            <div class="col-lg-4 col-md-4 col-6">
+              <a href="#" class="d-block mb-4 h-140">
+                    <img style="width:320px;height:240px;" class="img-fluid img-thumbnail" src="https://source.unsplash.com/acowe0pCVBg" alt="">
+                  </a>
+                {% if not memberInfo[memberIndex]['pref']['museum'] %}
+                <form action="/setPref/museum" method="post">
+                    <button type="submit" class="btn btn-outline-dark">Museums and Art Gallaries</button>
+                </form>
+                {% else %}
+                <form action="/setPref/museum" method="post">
+                    <button type="submit" class="btn btn-dark">Museums and Art Gallaries</button>
+                </form>
+                {% endif %}
+
+<!--                <h5 class="font-weight-light text-center mt-4 mb-0">Museums and Art Gallaries</h5>-->
+                <br>
+            </div>
+            <div class="col-lg-4 col-md-4 col-6">
+              <a href="#" class="d-block mb-4 h-140">
+                    <img style="width:320px;height:240px;" class="img-fluid img-thumbnail" src="https://source.unsplash.com/HTCQCvwV9XY" alt="">
+                  </a>
+
+                {% if not memberInfo[memberIndex]['pref']['amusement_park'] %}
+                <form action="/setPref/amusement_park" method="post">
+                    <button type="submit" class="btn btn-outline-dark">Amusement Parks</button>
+                </form>
+                {% else %}
+                <form action="/setPref/amusement_park" method="post">
+                    <button type="submit" class="btn btn-dark">Amusement Parks</button>
+                </form>
+                {% endif %}
+<!--                <h5 class="font-weight-light text-center mt-4 mb-0">Amusement Parks</h5>-->
+                <br>
+            </div>
+<!--          next row  -->
+        <div class="col-lg-4 col-md-4 col-6">
+          <a href="#" class="d-block mb-4 h-140">
+                <img style="width:320px;height:240px;" class="img-fluid img-thumbnail" src="https://source.unsplash.com/UqyHjOgYxYY" alt="">
+              </a>
+
+                {% if not memberInfo[memberIndex]['pref']['natural'] %}
+                <form action="/setPref/natural" method="post">
+                    <button type="submit" class="btn btn-outline-dark">Natural Features</button>
+                </form>
+                {% else %}
+                <form action="/setPref/natural" method="post">
+                    <button type="submit" class="btn btn-dark">Natural Features</button>
+                </form>
+                {% endif %}
+
+<!--            <h5 class="font-weight-light text-center mt-4 mb-0">Natural Features</h5>-->
+                <br>
+        </div>
+        <div class="col-lg-4 col-md-4 col-6">
+          <a href="#" class="d-block mb-4 h-140">
+                <img style="width:320px;height:240px;" class="img-fluid img-thumbnail" src="https://source.unsplash.com/MMS_CBu0ngM" alt="">
+              </a>
+
+                {% if not memberInfo[memberIndex]['pref']['tour'] %}
+                <form action="/setPref/tour" method="post">
+                    <button type="submit" class="btn btn-outline-dark">Tours and Water Sports</button>
+                </form>
+                {% else %}
+                <form action="/setPref/tour" method="post">
+                    <button type="submit" class="btn btn-dark">Tours and Water Sports</button>
+                </form>
+                {% endif %}
+
+<!--            <h5 class="font-weight-light text-center mt-4 mb-0">Tours and Water Sports</h5>-->
+                <br>
+        </div>
+        <div class="col-lg-4 col-md-4 col-6">
+          <a href="#" class="d-block mb-4 h-140">
+                <img style="width:320px;height:240px;" class="img-fluid img-thumbnail" src="https://source.unsplash.com/ttpNCevA1tA" alt="">
+              </a>
+                {% if not memberInfo[memberIndex]['pref']['zoo'] %}
+                <form action="/setPref/zoo" method="post">
+                    <button type="submit" class="btn btn-outline-dark">Zoos/Aquariums</button>
+                </form>
+                {% else %}
+                <form action="/setPref/zoo" method="post">
+                    <button type="submit" class="btn btn-dark">Zoos/Aquariums</button>
+                </form>
+                {% endif %}
+
+
+<!--            <h5 class="font-weight-light text-center mt-4 mb-0">Zoos/Aquariums</h5>-->
+                <br>
+        </div>
+      </div>
+    </div>
+
+    <form action="/nextMember" method="post">
         <button type="submit" class="btn btn-outline-dark">Submit Initial Preferences</button>
     </form>
 
