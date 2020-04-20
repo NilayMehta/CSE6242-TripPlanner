@@ -6,11 +6,11 @@
 <!--        and then clicking next repeates process for the next member and so on ...</p>-->
 
     <div class="container">
-
       <h1 class="font-weight-light text-center text-lg-left mt-4 mb-0">Trip Preferences</h1>
-        <h5 class="font-weight-light text-center text-lg-left mt-4 mb-0">Alright {{ memberInfo[memberIndex]['name'] }}, please select all the catagories you'd be interested in exploring!</h5>
-
-      <hr class="mt-2 mb-5">
+        <h5 class="font-weight-light text-center text-lg-left mt-4 mb-0">Alright {{ memberInfo[memberIndex]['name'] }}, please select all the categories you'd be interested in exploring! <br>
+            You can select either "Yes", "No" or the category name to keep the category selection neutral to indicate no preference. </h5>
+<br>
+      <hr class="mt-2 mb-4">
 
       <div class="row text-center text-lg-left">
             <div class="col-lg-4 col-md-4 col-6">
@@ -18,16 +18,41 @@
                     <img style="width:320px;height:240px;" class="img-fluid img-thumbnail" src="https://source.unsplash.com/rnc4-Z4Zk8M" alt="">
                   </a>
 
-                {% if not memberInfo[memberIndex]['pref']['tourist'] %}
-                <form action="/setPref/tourist" method="post">
-                    <button type="submit" class="btn btn-outline-dark">Popular Tourist Attractions</button>
-                </form>
-                {% else %}
-                <form action="/setPref/tourist" method="post">
-                    <button type="submit" class="btn btn-dark">Popular Tourist Attractions</button>
-                </form>
-<!--                <h5 class="font-weight-light text-center mt-4 mb-0">Popular Tourist Attractions</h5>-->
-                {% endif %}
+                <div style="width:100%; text-align: center;">
+
+                    <div style="display: inline-block;">
+                        {% if memberInfo[memberIndex]['pref']['tourist'] == 1 %}
+                        <form action="/setPref/neutral/tourist" method="post">
+                            <button type="submit" class="btn btn-success">Yes!</button>
+                        </form>
+                        {% else %}
+                        <form action="/setPref/pos/tourist" method="post">
+                            <button type="submit" class="btn btn-outline-success">Yes!</button>
+                        </form>
+                        {% endif %}
+                    </div>
+
+                    <div style="display: inline-block; width:200px">
+                        <form action="/setPref/neutral/tourist" method="post">
+                            <button type="submit" class="btn btn-light">Popular Tourist Places</button>
+                        </form>
+                    </div>
+
+                    <div style="display: inline-block;">
+                        {% if memberInfo[memberIndex]['pref']['tourist'] == -1 %}
+                        <form action="/setPref/neutral/tourist" method="post">
+                            <button type="submit" class="btn btn-danger">No!</button>
+                        </form>
+                        {% else %}
+                        <form action="/setPref/neg/tourist" method="post">
+                            <button type="submit" class="btn btn-outline-danger">No!</button>
+                        </form>
+                        {% endif %}
+                    </div>
+
+
+
+                </div>
 
                 <br>
             </div>
@@ -35,97 +60,307 @@
               <a href="#" class="d-block mb-4 h-140">
                     <img style="width:320px;height:240px;" class="img-fluid img-thumbnail" src="https://source.unsplash.com/acowe0pCVBg" alt="">
                   </a>
-                {% if not memberInfo[memberIndex]['pref']['museum'] %}
-                <form action="/setPref/museum" method="post">
-                    <button type="submit" class="btn btn-outline-dark">Museums and Art Gallaries</button>
-                </form>
-                {% else %}
-                <form action="/setPref/museum" method="post">
-                    <button type="submit" class="btn btn-dark">Museums and Art Gallaries</button>
-                </form>
-                {% endif %}
 
-<!--                <h5 class="font-weight-light text-center mt-4 mb-0">Museums and Art Gallaries</h5>-->
-                <br>
-            </div>
+                <div style="width:100%; text-align: center;">
+
+                    <div style="display: inline-block;">
+                        {% if memberInfo[memberIndex]['pref']['museum'] == 1 %}
+                        <form action="/setPref/neutral/museum" method="post">
+                            <button type="submit" class="btn btn-success">Yes!</button>
+                        </form>
+                        {% else %}
+                        <form action="/setPref/pos/museum" method="post">
+                            <button type="submit" class="btn btn-outline-success">Yes!</button>
+                        </form>
+                        {% endif %}
+                    </div>
+
+                    <div style="display: inline-block; width:200px">
+                        <form action="/setPref/neutral/museum" method="post">
+                            <button type="submit" class="btn btn-light">Museums and Art</button>
+                        </form>
+                    </div>
+
+                    <div style="display: inline-block;">
+                        {% if memberInfo[memberIndex]['pref']['museum'] == -1 %}
+                        <form action="/setPref/neutral/museum" method="post">
+                            <button type="submit" class="btn btn-danger">No!</button>
+                        </form>
+                        {% else %}
+                        <form action="/setPref/neg/museum" method="post">
+                            <button type="submit" class="btn btn-outline-danger">No!</button>
+                        </form>
+                        {% endif %}
+                    </div>
+
+                    <br>
+                </div></div>
+
+
             <div class="col-lg-4 col-md-4 col-6">
               <a href="#" class="d-block mb-4 h-140">
                     <img style="width:320px;height:240px;" class="img-fluid img-thumbnail" src="https://source.unsplash.com/HTCQCvwV9XY" alt="">
                   </a>
 
-                {% if not memberInfo[memberIndex]['pref']['amusement_park'] %}
-                <form action="/setPref/amusement_park" method="post">
-                    <button type="submit" class="btn btn-outline-dark">Amusement Parks</button>
-                </form>
-                {% else %}
-                <form action="/setPref/amusement_park" method="post">
-                    <button type="submit" class="btn btn-dark">Amusement Parks</button>
-                </form>
-                {% endif %}
+
+                <div style="width:100%; text-align: center;">
+
+                    <div style="display: inline-block;">
+                        {% if memberInfo[memberIndex]['pref']['amusement_park'] == 1 %}
+                        <form action="/setPref/neutral/amusement_park" method="post">
+                            <button type="submit" class="btn btn-success">Yes!</button>
+                        </form>
+                        {% else %}
+                        <form action="/setPref/pos/amusement_park" method="post">
+                            <button type="submit" class="btn btn-outline-success">Yes!</button>
+                        </form>
+                        {% endif %}
+                    </div>
+
+                    <div style="display: inline-block; width:200px">
+                        <form action="/setPref/neutral/amusement_park" method="post">
+                            <button type="submit" class="btn btn-light">Amusement Parks</button>
+                        </form>
+                    </div>
+
+                    <div style="display: inline-block;">
+                        {% if memberInfo[memberIndex]['pref']['amusement_park'] == -1 %}
+                        <form action="/setPref/neutral/amusement_park" method="post">
+                            <button type="submit" class="btn btn-danger">No!</button>
+                        </form>
+                        {% else %}
+                        <form action="/setPref/neg/amusement_park" method="post">
+                            <button type="submit" class="btn btn-outline-danger">No!</button>
+                        </form>
+                        {% endif %}
+                    </div>
+
 <!--                <h5 class="font-weight-light text-center mt-4 mb-0">Amusement Parks</h5>-->
                 <br>
-            </div>
+                </div></div>
+
+
+
 <!--          next row  -->
         <div class="col-lg-4 col-md-4 col-6">
           <a href="#" class="d-block mb-4 h-140">
                 <img style="width:320px;height:240px;" class="img-fluid img-thumbnail" src="https://source.unsplash.com/UqyHjOgYxYY" alt="">
               </a>
 
-                {% if not memberInfo[memberIndex]['pref']['natural'] %}
-                <form action="/setPref/natural" method="post">
-                    <button type="submit" class="btn btn-outline-dark">Natural Features</button>
-                </form>
-                {% else %}
-                <form action="/setPref/natural" method="post">
-                    <button type="submit" class="btn btn-dark">Natural Features</button>
-                </form>
-                {% endif %}
+            <div style="width:100%; text-align: center;">
+
+                    <div style="display: inline-block;">
+                        {% if memberInfo[memberIndex]['pref']['natural'] == 1 %}
+                        <form action="/setPref/neutral/natural" method="post">
+                            <button type="submit" class="btn btn-success">Yes!</button>
+                        </form>
+                        {% else %}
+                        <form action="/setPref/pos/natural" method="post">
+                            <button type="submit" class="btn btn-outline-success">Yes!</button>
+                        </form>
+                        {% endif %}
+                    </div>
+
+                    <div style="display: inline-block; width:200px">
+                        <form action="/setPref/neutral/natural" method="post">
+                            <button type="submit" class="btn btn-light">Natural Features</button>
+                        </form>
+                    </div>
+
+                    <div style="display: inline-block;">
+                        {% if memberInfo[memberIndex]['pref']['natural'] == -1 %}
+                        <form action="/setPref/neutral/natural" method="post">
+                            <button type="submit" class="btn btn-danger">No!</button>
+                        </form>
+                        {% else %}
+                        <form action="/setPref/neg/natural" method="post">
+                            <button type="submit" class="btn btn-outline-danger">No!</button>
+                        </form>
+                        {% endif %}
+                    </div>
 
 <!--            <h5 class="font-weight-light text-center mt-4 mb-0">Natural Features</h5>-->
                 <br>
-        </div>
+            </div></div>
+
         <div class="col-lg-4 col-md-4 col-6">
           <a href="#" class="d-block mb-4 h-140">
                 <img style="width:320px;height:240px;" class="img-fluid img-thumbnail" src="https://source.unsplash.com/MMS_CBu0ngM" alt="">
               </a>
 
-                {% if not memberInfo[memberIndex]['pref']['tour'] %}
-                <form action="/setPref/tour" method="post">
-                    <button type="submit" class="btn btn-outline-dark">Tours and Water Sports</button>
-                </form>
-                {% else %}
-                <form action="/setPref/tour" method="post">
-                    <button type="submit" class="btn btn-dark">Tours and Water Sports</button>
-                </form>
-                {% endif %}
+            <div style="width:100%; text-align: center;">
 
-<!--            <h5 class="font-weight-light text-center mt-4 mb-0">Tours and Water Sports</h5>-->
+                    <div style="display: inline-block;">
+                        {% if memberInfo[memberIndex]['pref']['tour'] == 1 %}
+                        <form action="/setPref/neutral/tour" method="post">
+                            <button type="submit" class="btn btn-success">Yes!</button>
+                        </form>
+                        {% else %}
+                        <form action="/setPref/pos/tour" method="post">
+                            <button type="submit" class="btn btn-outline-success">Yes!</button>
+                        </form>
+                        {% endif %}
+                    </div>
+
+                    <div style="display: inline-block; width:200px">
+                        <form action="/setPref/neutral/tour" method="post">
+                            <button type="submit" class="btn btn-light">Tours and Sports</button>
+                        </form>
+                    </div>
+
+                    <div style="display: inline-block;">
+                        {% if memberInfo[memberIndex]['pref']['tour'] == -1 %}
+                        <form action="/setPref/neutral/tour" method="post">
+                            <button type="submit" class="btn btn-danger">No!</button>
+                        </form>
+                        {% else %}
+                        <form action="/setPref/neg/tour" method="post">
+                            <button type="submit" class="btn btn-outline-danger">No!</button>
+                        </form>
+                        {% endif %}
+                    </div>
+
                 <br>
+            </div>
         </div>
+
         <div class="col-lg-4 col-md-4 col-6">
           <a href="#" class="d-block mb-4 h-140">
                 <img style="width:320px;height:240px;" class="img-fluid img-thumbnail" src="https://source.unsplash.com/ttpNCevA1tA" alt="">
               </a>
-                {% if not memberInfo[memberIndex]['pref']['zoo'] %}
-                <form action="/setPref/zoo" method="post">
-                    <button type="submit" class="btn btn-outline-dark">Zoos/Aquariums</button>
-                </form>
-                {% else %}
-                <form action="/setPref/zoo" method="post">
-                    <button type="submit" class="btn btn-dark">Zoos/Aquariums</button>
-                </form>
-                {% endif %}
 
+            <div style="width:100%; text-align: center;">
 
-<!--            <h5 class="font-weight-light text-center mt-4 mb-0">Zoos/Aquariums</h5>-->
+                    <div style="display: inline-block;">
+                        {% if memberInfo[memberIndex]['pref']['zoo'] == 1 %}
+                        <form action="/setPref/neutral/zoo" method="post">
+                            <button type="submit" class="btn btn-success">Yes!</button>
+                        </form>
+                        {% else %}
+                        <form action="/setPref/pos/zoo" method="post">
+                            <button type="submit" class="btn btn-outline-success">Yes!</button>
+                        </form>
+                        {% endif %}
+                    </div>
+
+                    <div style="display: inline-block; width:200px">
+                        <form action="/setPref/neutral/zoo" method="post">
+                            <button type="submit" class="btn btn-light">Zoos and Aquariums</button>
+                        </form>
+                    </div>
+
+                    <div style="display: inline-block;">
+                        {% if memberInfo[memberIndex]['pref']['zoo'] == -1 %}
+                        <form action="/setPref/neutral/zoo" method="post">
+                            <button type="submit" class="btn btn-danger">No!</button>
+                        </form>
+                        {% else %}
+                        <form action="/setPref/neg/zoo" method="post">
+                            <button type="submit" class="btn btn-outline-danger">No!</button>
+                        </form>
+                        {% endif %}
+                    </div>
+
                 <br>
+            </div>
+            <br>
+
         </div>
+
+          <!--          last row  -->
+        <div class="col-lg-6 col-md-6 col-6">
+          <a href="#" class="d-block mb-6 h-140" style="text-align: center;">
+                <img style="width:320px;height:240px;" class="img-fluid img-thumbnail" src="https://source.unsplash.com/8IKf54pc3qk" alt="">
+              </a>
+            <br>
+
+            <div style="width:100%; text-align: center;">
+
+                    <div style="display: inline-block;">
+                        {% if memberInfo[memberIndex]['pref']['food'] == 1 %}
+                        <form action="/setPref/neutral/food" method="post">
+                            <button type="submit" class="btn btn-success">Yes!</button>
+                        </form>
+                        {% else %}
+                        <form action="/setPref/pos/food" method="post">
+                            <button type="submit" class="btn btn-outline-success">Yes!</button>
+                        </form>
+                        {% endif %}
+                    </div>
+
+                    <div style="display: inline-block; width:200px">
+                        <form action="/setPref/neutral/food" method="post">
+                            <button type="submit" class="btn btn-light">Local Food</button>
+                        </form>
+                    </div>
+
+                    <div style="display: inline-block;">
+                        {% if memberInfo[memberIndex]['pref']['food'] == -1 %}
+                        <form action="/setPref/neutral/food" method="post">
+                            <button type="submit" class="btn btn-danger">No!</button>
+                        </form>
+                        {% else %}
+                        <form action="/setPref/neg/food" method="post">
+                            <button type="submit" class="btn btn-outline-danger">No!</button>
+                        </form>
+                        {% endif %}
+                    </div>
+
+<!--            <h5 class="font-weight-light text-center mt-4 mb-0">Natural Features</h5>-->
+                <br>
+            </div></div>
+
+        <div class="col-lg-6 col-md-6 col-6">
+          <a href="#" class="d-block mb-6 h-140" style="text-align: center;">
+                <img style="width:320px;height:240px;" class="img-fluid img-thumbnail" src="https://source.unsplash.com/V3qzwMY2ak0" alt="">
+              </a>
+            <br>
+
+            <div style="width:100%; text-align: center;">
+
+                    <div style="display: inline-block;">
+                        {% if memberInfo[memberIndex]['pref']['casino'] == 1 %}
+                        <form action="/setPref/neutral/casino" method="post">
+                            <button type="submit" class="btn btn-success">Yes!</button>
+                        </form>
+                        {% else %}
+                        <form action="/setPref/pos/casino" method="post">
+                            <button type="submit" class="btn btn-outline-success">Yes!</button>
+                        </form>
+                        {% endif %}
+                    </div>
+
+                    <div style="display: inline-block; width:200px">
+                        <form action="/setPref/neutral/casino" method="post">
+                            <button type="submit" class="btn btn-light">Casino</button>
+                        </form>
+                    </div>
+
+                    <div style="display: inline-block;">
+                        {% if memberInfo[memberIndex]['pref']['casino'] == -1 %}
+                        <form action="/setPref/neutral/casino" method="post">
+                            <button type="submit" class="btn btn-danger">No!</button>
+                        </form>
+                        {% else %}
+                        <form action="/setPref/neg/casino" method="post">
+                            <button type="submit" class="btn btn-outline-danger">No!</button>
+                        </form>
+                        {% endif %}
+                    </div>
+
+<!--            <h5 class="font-weight-light text-center mt-4 mb-0">Natural Features</h5>-->
+                <br>
+            </div></div>
+
       </div>
     </div>
 
-    <form action="/nextMember" method="post">
-        <button type="submit" class="btn btn-outline-dark">Submit Initial Preferences</button>
+<br><br>
+
+    <form style="text-align: center;" action="/nextMember" method="post">
+        <button type="submit" class="btn btn-outline-dark">Submit Preferences</button>
     </form>
 
+<br><br>
 
 {% endblock %}

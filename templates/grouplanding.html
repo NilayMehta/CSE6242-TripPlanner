@@ -1,13 +1,14 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <h1>{{ app_data['transition'] }}</h1>
+    <h1>First, we'll collect some information about your Group.</h1>
 
 <!--    <p class="lead">basic<br> as <br> hell</p>-->
 
 
 <div class="group-form">
-      <h2 style = "text-align: center;">Group Form</h2>
+<!--      <h2 style = "text-align: left;">Group Form</h2>-->
+    <br>
 
       {% for message in form.groupName.errors %}
          <div>{{ message }}</div>
@@ -23,7 +24,7 @@
                <br>
                {{ form.groupSize.label }} <br> {{ form.groupSize }}
                 <br>
-               {{ form.startCity.label }} <br> {{ form.startCity }}
+               {{ form.startCity.label }} (Please input in City, State format, ex. Miami, FL) <br> {{ form.startCity }}
                 <br>
                {{ form.distance.label }}<br> {{ form.distance }}
                 <br>

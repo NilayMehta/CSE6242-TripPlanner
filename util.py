@@ -7,11 +7,15 @@ import requests
 import numpy as np
 import pandas as pd
 import random
+import ast
+from googleplaces import GooglePlaces, types, lang
+
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
-my_API_key = "AIzaSyC0krOZZt0doCgSlAL0m75wxnq1GCIu5Tg"
+my_API_key = 'AIzaSyAsehbprMSCj4Hs1aquw2yDekqQii2KUYE'
+google_places = GooglePlaces(my_API_key)
 
 voting_suggestions_count = 20
 
@@ -75,7 +79,6 @@ def api_tsp():
 
 
 # Suggestions
-
 def compileMemberInfo(memberInfo):
     pref_mapping = {'tourist': 0, 'museum': 1, 'amusement_park': 2, 'natural': 3, 'tour': 4, 'zoo': 5}
     pref_vector = [0] * 6
@@ -180,3 +183,12 @@ def latlng2miles(lat1, lng1, lat2, lng2):
 
     return miles
 
+def parseCategories(x):
+    c = ast.literal_eval(x)
+    return c
+
+def getPlaceImageURL(placeId):
+    res = google_places.get_place(placeId)
+    res.get_details()
+    res.photos[0].get(maxheight=500, maxwidth=500)
+    return res.photos[0].url

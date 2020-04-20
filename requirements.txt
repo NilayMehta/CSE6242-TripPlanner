@@ -4,4 +4,6 @@ pandas
 mlrose
 requests
 numpy
-
+geopy
+ast
+python-google-places
