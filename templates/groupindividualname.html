@@ -1,39 +1,183 @@
-{% extends 'layout.html' %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% block body %}
+    <title>{{ app_data['html_title'] }}</title>
 
-    {% if not getStarted %}
-    <h1>Group Name: {{ group_data['groupName'] }}</h1>
-    <h2>Welcome group member {{memberIndex + 1}}</h2>
-    <h4>First, lets get your name</h4>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
-    <form action = "/getstarted" method = post>
-              {{ form.hidden_tag() }}
-             <fieldset>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-                <div style = font-size:20px; font-weight:bold; margin-left:150px;>
-                   {{ form.memberName.label }}<br> {{ form.memberName }}
-                   <br><br>
-                   {{ form.submit }}
-                </div>
+    <style>
+:root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: 0.75rem;
+}
 
-             </fieldset>
-          </form>
+.login,
+.image {
+  min-height: 100vh;
+}
 
-    {% endif %}
+.bg-image {
+  background-image: url('https://source.unsplash.com/WEQbe2jBg40/600x1200');
+  background-size: cover;
+  background-position: center;
+}
+
+.login-heading {
+  font-weight: 300;
+}
+
+.btn-login {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+  border-radius: 2rem;
+}
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-label-group>input,
+.form-label-group>label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+  height: auto;
+  border-radius: 2rem;
+}
+
+.form-label-group>label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495057;
+  cursor: text;
+  /* Match the input under the label */
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
+}
+
+.form-label-group input::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input:-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-moz-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.form-label-group input:not(:placeholder-shown)~label {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 0px;
+  color: #777;
+}
+  </style>
 
 
-    {% if getStarted %}
-    <h1>That looks good {{ group_data['groupName'] }}!</h1>
-    <h4>Now we will learn a little bit more about each of you, please have each of the {{ group_data['groupSize'] }} member fill out their preferences!</h4>
+  </head>
 
-    <form action="getstarted" method="post">
-        <button type="submit" class="btn btn-outline-dark">Lets get started</button>
-    </form>
+{% include 'includes/_navbar.html' %}
 
-    {% endif %}
+  <div style="padding-top: 50px;"></div>
 
-<!--    <p class="lead">For each of the {{ group_data['groupSize'] }} members in your group, please fill out the forms below!<br>-->
-<!--        yeet</p>-->
 
-{% endblock %}
+  {% if getStarted %}
+  <header class="bg-primary text-center py-5 mb-4">
+      <div class="container">
+          <h1 class="font-weight-light text-white">That looks good {{ group_data['groupName'] }}!</h1>
+      </div>
+  </header>
+
+  <div style="padding-top: 20px;"></div>
+
+  <div class="container">
+      <div class="row">
+          <div class="col-xl-8 col-md-8 mb-8" style="margin: auto;">
+              <div class="card border-0 shadow">
+                  <div style="padding-top: 10px;"></div>
+                  <div class="card-body text-center">
+                      <h5 class="login-heading mb-0">Now we will learn a little bit more about each of you, please have each of the {{ group_data['groupSize'] }} member fill out their preferences!</h5>
+                      <br>
+                      <div style="width:45%; margin:auto">
+                          <form action="getstarted" method="post">
+                              <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">We are Ready</button>
+                      </form>
+                      </div>
+                  </div>
+                  <div style="padding-top: 5px;"></div>
+              </div>
+          </div>
+      </div>
+  </div>
+  {% endif %}
+
+  {% if not getStarted %}
+  <header class="bg-primary text-center py-5 mb-4">
+      <div class="container">
+          <h1 class="font-weight-light text-white">Welcome Group Member <b>{{memberIndex + 1}}</b></h1>
+      </div>
+  </header>
+
+  <div style="padding-top: 20px;"></div>
+
+  <div class="container">
+      <div class="row">
+          <div class="col-xl-8 col-md-8 mb-8" style="margin: auto;">
+              <div class="card border-0 shadow">
+                  <div style="padding-top: 10px;"></div>
+                  <div class="card-body text-center">
+                      <h3 class="login-heading mb-0">First, lets get your name!</h3>
+                      <br>
+
+                      <div style="width:70%; margin:auto">
+
+                      <form action = "/getstarted" method = post>
+                    {{ form.hidden_tag() }}
+
+                          <h5 class="login-heading"> {{ form.memberName.label }} </h5>
+                    <div class="form-label-group">
+                        {{ form.memberName(class_='form-control', value='') }}
+                    </div>
+
+                    <br>
+                          <div style="width:50%; margin:auto">
+                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Submit</button>
+                          </div>
+
+              </form>
+                      </div>
+                  </div>
+                  <div style="padding-top: 5px;"></div>
+              </div>
+          </div>
+      </div>
+  </div>
+  {% endif %}
+

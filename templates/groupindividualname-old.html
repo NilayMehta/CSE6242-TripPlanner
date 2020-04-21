@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div style="padding-top: 100px;"></div>
+
+    {% if not getStarted %}
+    <h1>Group Name: {{ group_data['groupName'] }}</h1>
+    <h2>Welcome group member {{memberIndex + 1}}</h2>
+    <h4>First, lets get your name</h4>
+
+    <form action = "/getstarted" method = post>
+              {{ form.hidden_tag() }}
+             <fieldset>
+
+                <div style = font-size:20px; font-weight:bold; margin-left:150px;>
+                   {{ form.memberName.label }}<br> {{ form.memberName(value= '') }}
+                   <br><br>
+                    <input type=submit class='btn btn-outline-dark'>
+<!--                   {{ form.submit }}-->
+                </div>
+
+             </fieldset>
+          </form>
+
+    {% endif %}
+
+
+    {% if getStarted %}
+    <h1>That looks good {{ group_data['groupName'] }}!</h1>
+    <h4>Now we will learn a little bit more about each of you, please have each of the {{ group_data['groupSize'] }} member fill out their preferences!</h4>
+
+    <form action="getstarted" method="post">
+        <button type="submit" class="btn btn-outline-dark">Lets get started</button>
+    </form>
+
+    {% endif %}
+
+<!--    <p class="lead">For each of the {{ group_data['groupSize'] }} members in your group, please fill out the forms below!<br>-->
+<!--        yeet</p>-->
+
+{% endblock %}

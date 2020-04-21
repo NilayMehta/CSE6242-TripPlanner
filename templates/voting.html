@@ -1,62 +1,199 @@
-{% extends 'layout.html' %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% block body %}
+    <title>{{ app_data['html_title'] }}</title>
 
-    <h1>{{ app_data['groupName']}} </h1>
-    <h4>Based on your group's trip criteria and category preferences,
-        we've compiled a list of relevant destinations that we think you guys will like. <br><br>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
-        {{ memberInfo[memberIndex]['name'] }} (Member {{memberIndex + 1}}), please rank these top 20 places as destinations you'd like to visit on your trip!
-    </h4>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<!--    {% for idx in memberInfo %}-->
-<!--    <h4> Member #{{ idx + 1 }}: {{ memberInfo[idx]['name'] }}  </h4> <br>-->
-<!--        {% for pref in memberInfo[idx]['pref'] %}-->
-<!--        <h5> {{pref}}: {{memberInfo[idx]['pref'][pref]}} </h5><br>-->
-<!--        {% endfor %}-->
-<!--    {% endfor %}-->
+    <style>
+:root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: 0.75rem;
+}
 
-<!--{% for table in tables %}-->
-<!--            {{ table|safe }}-->
-<!--{% endfor %}-->
+.login,
+.image {
+  min-height: 100vh;
+}
+
+.bg-image {
+  background-image: url('https://source.unsplash.com/WEQbe2jBg40/600x1200');
+  background-size: cover;
+  background-position: center;
+}
+
+.login-heading {
+  font-weight: 300;
+}
+
+.btn-login {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+  border-radius: 2rem;
+}
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-label-group>input,
+.form-label-group>label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+  height: auto;
+  border-radius: 2rem;
+}
+
+.form-label-group>label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495057;
+  cursor: text;
+  /* Match the input under the label */
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
+}
+
+.form-label-group input::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input:-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-moz-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.form-label-group input:not(:placeholder-shown)~label {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 0px;
+  color: #777;
+}
+  </style>
+  </head>
+
+{% include 'includes/_navbar.html' %}
+
+  <div style="padding-top: 50px;"></div>
+
+<header class="bg-primary text-center py-5 mb-4">
+  <div class="container">
+    <h1 class="font-weight-light text-white">Voting - {{ memberInfo[memberIndex]['name'] }} (Member {{memberIndex + 1}})</h1>
+  </div>
+</header>
+
+  <div style="padding-top: 10px;"></div>
+
+  <div class="container">
+      <div class="row">
+          <div class="col-xl-10 col-md-10 mb-10" style="margin: auto;">
+              <div class="card border-0 shadow">
+                  <div style="padding-top: 10px;"></div>
+                  <div class="card-body text-center">
+
+                      <h4 class="login-heading mb-0">Based on your group's trip criteria and category preferences,
+                        we've compiled a list of relevant destinations that we beleive you will like.</h4>
+                        <br>
+                      <h4 class="login-heading  mb-0"><b>{{ memberInfo[memberIndex]['name'] }},</b> please rank these Top 20 destination recomendations that you'd like to visit on your trip!</h4>
+
+                  </div>
+                  <div style="padding-top: 30px;"></div>
+              </div>
+          </div>
+      </div>
+  </div>
 
 <br>
+
+  <div class="container">
+
 <form action="/testVoting" method="post">
         {% for idx, row in suggestions.iterrows() %}
-            {{ row['place_name'] }}
-            <br>Tags:
-            {% for cat in row['categories'] %}
-                    <span class="badge badge-secondary">{{ cat }}</span>
-            {% endfor %}
-            <br>
 
-            <img style="width:320px;height:240px;" class="img-fluid img-thumbnail" src={{row['photo_url']}} alt="">
-            <br>
+        {% if idx % 3 == 0 %}
+          <div class="row">
+        {% endif %}
 
-            {% set rating = row['rating'] | int %}
-            {{ row['rating'] }}/5
-            {% for x in range(rating) %}
-            <span class="fa fa-star checked"></span>
-            {% endfor %}
-            {% if (row['rating'] % 1) > 0.3 or (row['rating'] % 1) < 0.75 %}
-            <span class="fa fa-star-half checked"></span>
-            {% endif %}
-            <br>
-            <span class="fa fa-user"></span> {{ row['number'] }} reviews total
-            <br>
-            Rating: <br>
-            <span class="badge badge-danger">-5</span>
-            <input type="range" min="-5" max="5" name={{idx}} />
-            <span class="badge badge-success">+5</span>
-            <br><br>
+
+        <div class="col-xl-4 col-md-4 mb-4">
+            <div style="width:320px;" class="card border-0 shadow">
+                <img style="width:320px;height:240px;" src="{{row['photo_url']}}" class="card-img-top" alt="">
+
+                <div style="width:320px;height:208px;" class="card-body text-center">
+                    <h5 class="card-title mb-0">{{ row['place_name'] }}</h5>
+
+                    {% set rating = row['rating'] | int %}
+                    {{ row['rating'] }}/5
+                    {% for x in range(rating) %}
+                    <span class="fa fa-star checked"></span>
+                    {% endfor %}
+                    {% if (row['rating'] % 1) > 0.3 or (row['rating'] % 1) < 0.75 %}
+                    <span class="fa fa-star-half checked"></span>
+                    {% endif %}
+
+                    <br>
+                    <span class="fa fa-user"></span> {{ row['number'] }} reviews total
+                    <br>
+                    Rating: <br>
+                    <span class="badge badge-danger">-5</span>
+                    <input type="range" min="-5" max="5" name={{idx}} />
+                    <span class="badge badge-success">+5</span>
+                    <br><br>
+
+                </div>
+            </div>
+        </div>
+
+                            {% if idx % 3 == 2 %}
+          </div>
+        {% endif %}
+
+    {% if idx == 19 %}
+          </div>
+        {% endif %}
+
 
 {% endfor %}
-    <div style="text-align: center;">
-        <button type="submit" class="btn btn-outline-dark">Submit</button>
+  <br>
+    <div style="width:30%; margin:auto; text-align: center;">
+        <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Submit</button>
     </div>
+
 
 </form>
 
-<br><br>
+<br>
 
-{% endblock %}
+
+</div>
+
+  <div style="padding-top: 30px;"></div>

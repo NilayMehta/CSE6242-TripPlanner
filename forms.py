@@ -10,6 +10,7 @@ class GroupForm(FlaskForm):
     startCity = StringField('Starting City')
     distance = StringField('Max Travel Distance in Miles')
     duration = StringField('Trip Duration in Days')
+    driveTime = StringField('Maximum Time Spent Driving Each Day (in Hours)')
     submit = SubmitField('Submit')
 
 class Individual(FlaskForm):

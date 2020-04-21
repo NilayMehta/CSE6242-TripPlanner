@@ -5,11 +5,13 @@ from flask import Flask, render_template, request, flash, url_for
 import copy
 from werkzeug.utils import redirect
 
+import TSP
 import suggestions
 import util
 import forms
 from geopy.geocoders import Nominatim
 import pandas as pd
+import numpy as np
 
 app = Flask(__name__)
 
@@ -56,8 +58,9 @@ def grouplanding():
         group_form_data['groupName'] = form.groupName.data
         group_form_data['groupSize'] = int(form.groupSize.data)
         group_form_data['startCity'] = form.startCity.data
-        group_form_data['distance'] = form.distance.data
+        group_form_data['distance'] = int(form.distance.data)
         group_form_data['duration'] = int(form.duration.data)
+        group_form_data['driveTime'] = float(form.driveTime.data)
         print(group_form_data)
         return render_template('groupindividualname.html', app_data=app_data, group_data=group_form_data, getStarted = True)
     print('no success')
@@ -123,13 +126,13 @@ def preferenceGather():
     print('negative_categories')
     print(negative_categories)
 
-    # filtered_dataset = suggestions.output_dataset(coords, max_distance, negative_categories, positive_categories)
-    # filtered_dataset['categories'] = filtered_dataset['categories'].apply(util.parseCategories)
-    # filtered_dataset['photo_url'] = filtered_dataset['place_id'].apply(util.getPlaceImageURL)
-    # filtered_dataset.to_csv('assets/suggestions/' + group_form_data['groupName'] + '.csv', index=False)
-
-    filtered_dataset = pd.read_csv('assets/suggestions/sad.csv')
+    filtered_dataset = suggestions.output_dataset(coords, max_distance, negative_categories, positive_categories)
     filtered_dataset['categories'] = filtered_dataset['categories'].apply(util.parseCategories)
+    # filtered_dataset['photo_url'] = filtered_dataset['place_id'].apply(util.getPlaceImageURL)
+    filtered_dataset.to_csv('assets/suggestions/' + group_form_data['groupName'] + '.csv', index=False)
+
+    # filtered_dataset = pd.read_csv('assets/suggestions/sad.csv')
+    # filtered_dataset['categories'] = filtered_dataset['categories'].apply(util.parseCategories)
 
 
     return render_template('voting.html', app_data=app_data, group_data=group_form_data, getStarted=False,
@@ -165,6 +168,29 @@ def testVoting():
 
     filtered_dataset = pd.read_csv('assets/suggestions/sad.csv')
     filtered_dataset['categories'] = filtered_dataset['categories'].apply(util.parseCategories)
+
+    if memberIndex >= group_form_data['groupSize']:
+        ballot_arr = np.zeros(20).astype(int)
+        ballot_match = []
+        for member_idx in votingResults:
+            ballot_arr = ballot_arr + np.array(votingResults[member_idx]).astype(int)
+
+        placeIds = filtered_dataset['place_id'].to_numpy()
+        for place_idx, placeId in enumerate(placeIds):
+            ballot_match.append((placeId, ballot_arr[place_idx]))
+
+        sorted_ballots = sorted(ballot_match, key=lambda x: -x[1])
+
+        sorted_placeIds = []
+        for pair in sorted_ballots:
+            sorted_placeIds.append(pair[0])
+
+        print("sorted_placeIds", sorted_placeIds)
+
+        final_itin = TSP.TSP(sorted_placeIds, group_form_data['duration'], group_form_data['driveTime'])
+
+
+        return render_template('index.html', app_data=app_data)
 
     return render_template('voting.html', app_data=app_data, group_data=group_form_data, memberIndex=memberIndex, memberInfo=memberInfo,
                            tables=[filtered_dataset.to_html(classes='data', header="true")],

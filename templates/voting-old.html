@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+    <h1>{{ app_data['groupName']}} </h1>
+    <h4>Based on your group's trip criteria and category preferences,
+        we've compiled a list of relevant destinations that we think you guys will like. <br><br>
+
+        {{ memberInfo[memberIndex]['name'] }} (Member {{memberIndex + 1}}), please rank these top 20 places as destinations you'd like to visit on your trip!
+    </h4>
+
+<!--    {% for idx in memberInfo %}-->
+<!--    <h4> Member #{{ idx + 1 }}: {{ memberInfo[idx]['name'] }}  </h4> <br>-->
+<!--        {% for pref in memberInfo[idx]['pref'] %}-->
+<!--        <h5> {{pref}}: {{memberInfo[idx]['pref'][pref]}} </h5><br>-->
+<!--        {% endfor %}-->
+<!--    {% endfor %}-->
+
+<!--{% for table in tables %}-->
+<!--            {{ table|safe }}-->
+<!--{% endfor %}-->
+
+<br>
+<form action="/testVoting" method="post">
+        {% for idx, row in suggestions.iterrows() %}
+            {{ row['place_name'] }}
+            <br>Tags:
+            {% for cat in row['categories'] %}
+                    <span class="badge badge-secondary">{{ cat }}</span>
+            {% endfor %}
+            <br>
+
+            <img style="width:320px;height:240px;" class="img-fluid img-thumbnail" src={{row['photo_url']}} alt="">
+            <br>
+
+            {% set rating = row['rating'] | int %}
+            {{ row['rating'] }}/5
+            {% for x in range(rating) %}
+            <span class="fa fa-star checked"></span>
+            {% endfor %}
+            {% if (row['rating'] % 1) > 0.3 or (row['rating'] % 1) < 0.75 %}
+            <span class="fa fa-star-half checked"></span>
+            {% endif %}
+            <br>
+            <span class="fa fa-user"></span> {{ row['number'] }} reviews total
+            <br>
+            Rating: <br>
+            <span class="badge badge-danger">-5</span>
+            <input type="range" min="-5" max="5" name={{idx}} />
+            <span class="badge badge-success">+5</span>
+            <br><br>
+
+{% endfor %}
+    <div style="text-align: center;">
+        <button type="submit" class="btn btn-outline-dark">Submit</button>
+    </div>
+
+</form>
+
+<br><br>
+
+{% endblock %}

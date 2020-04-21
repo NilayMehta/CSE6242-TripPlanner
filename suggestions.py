@@ -82,7 +82,7 @@ def relevance_score(data, negative_preferences, positive_preferences):
 
     data["relevance_score"] = list_score
     data = data[["place_name", "relevance_score", "place_id", "categories", "number", "rating", "address", "lat", "lng",
-                 "photos"]]
+                 "photos", 'photo_url']]
     data = data.sort_values(by=['relevance_score'], ascending=False)
     data = data.reset_index()
     data = data.drop(["index"], axis=1)

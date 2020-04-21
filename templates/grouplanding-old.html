@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1>First, we'll collect some information about your Group</h1>
+
+<!--    <p class="lead">basic<br> as <br> hell</p>-->
+
+
+<div class="group-form">
+<!--      <h2 style = "text-align: left;">Group Form</h2>-->
+    <br>
+
+      {% for message in form.groupName.errors %}
+         <div>{{ message }}</div>
+      {% endfor %}
+
+      <form action = "/grouplanding" method = post>
+          {{ form.hidden_tag() }}
+         <fieldset>
+<!--            <legend>Group Form</legend>-->
+
+            <div style = font-size:20px; font-weight:bold; margin-left:150px;>
+               {{ form.groupName.label }}<br> {{ form.groupName(value='Test Team') }}
+               <br>
+               {{ form.groupSize.label }} <br> {{ form.groupSize(value='2') }}
+                <br>
+               {{ form.startCity.label }} (Please input in City, State format, ex. Miami, FL) <br> {{ form.startCity(value='Miami, FL') }}
+                <br>
+               {{ form.distance.label }}<br> {{ form.distance(value='100') }}
+                <br>
+               {{ form.duration.label }}<br> {{ form.duration(value='4') }}
+                <br>
+                {{ form.driveTime.label }}<br> {{ form.driveTime(value='4') }}
+                <br><br>
+                <input type=submit class='btn btn-outline-dark'>
+<!--               {{ form.submit }}-->
+            </div>
+
+         </fieldset>
+      </form>
+
+
+</div>
+
+
+
+{% endblock %}
