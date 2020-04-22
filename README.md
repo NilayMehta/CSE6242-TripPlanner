@@ -1,9 +1,16 @@
 # CSE6242 Final Project - TripPlanner
+
+## Description
+
 Trip Planner is all about creating the perfect road trip. Our application collects and analyzes each group member's preferences to create the perfect itinerary for your next trip. Get started with planning your next road trip now!
+
+[THIS NEEDS TO BE A COUPLE PARAGRAPHS - ADD]
 
 A video demo of our application can be found here!
 
 [INSERT URL]
+
+## Installation/Execution
 
 In order to set up our project, please download our repository. Once you have have the project downloaded or cloned please follow the following steps (Please ensure that Python 3 is installed on your local machine):
 
