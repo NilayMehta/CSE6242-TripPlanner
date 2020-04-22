@@ -1,34 +1,25 @@
 # CSE6242-TripPlanner
 Trip Planner is all about creating the perfect road trip. Our application collects and analyzes each group member's preferences to create the perfect itinerary for your next trip. Get started with planning your next road trip now!
 
-I would recommend using a virutal env to run the project, but it's not required. To run it inside of a virtual env, follow these steps:
-1. run 'python3 -m venv venv'
-2. run 'source venv/bin/activate' to activate virtual env (this works on Mac OSX, for windows I think its 'venv\Scripts\activate')
-3. run 'pip install -r requirements.txt'
-4. run 'python app.py'
+A video demo of our application can be found here!
+[INSERT URL]
 
-Without a virtual environment, all you need to do is run 
-```
-pip install -r requirements.txt
-python app.py
-```
+In order to set up our project, please download our repository. Once you have have the project downloaded or cloned please follow the following steps (Please ensure that Python 3 is installed on your local machine):
 
-This will open a server on http://127.0.0.1:5000/<br />
+1. Change directory into project
+`cd CSE6242-TripPlanner/`
 
-TSP stuff has been moved to util.py
+2. Set up a Vitrual Environment 
+`run 'python3 -m venv venv'`
 
-TSP Readme Section from before:
+3. Activate Virtual Environment
+OSX: `source venv/bin/activate`
+WIndows: `'venv\Scripts\activate'`
 
-To send request to TSP api you do the following:<br />
-Send a GET request to the following resource<br />
-http://127.0.0.1:5000/api/v1/TSP?places=<br />
-where places is followed by a list of placeID for example<br />
-http://127.0.0.1:5000/api/v1/TSP?places=ChIJ96XKNOZ-3YgRoPEc0B85Hqc,ChIJ98BffLK22YgRsymdIvOgjNA,ChIJgUulalN-3YgRGoTaWM2LawY,ChIJvRBCrN9-54gRGZuuaCLGrQE,ChIJyaCQzpHhwogRBdPcZI6UOyc<br /><br />
+4. Install dependencies
+`pip install -r requirements.txt`
 
-This will return a json request with a list of placeID in order under the 'request' field<br />
+5. Run Application
+`python app.py`
 
-<h2>Checklist</h2>
-- [x] TSP API
-- [ ] Recommendation API
-- [ ] UI Landing Page
-- [ ] UI Map Page
+The application should now be operational! It can be accessed at http://127.0.0.1:5000/
