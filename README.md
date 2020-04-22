@@ -1,4 +1,4 @@
-# CSE6242-TripPlanner
+# CSE6242 Final Project - TripPlanner
 Trip Planner is all about creating the perfect road trip. Our application collects and analyzes each group member's preferences to create the perfect itinerary for your next trip. Get started with planning your next road trip now!
 
 A video demo of our application can be found here!
