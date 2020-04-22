@@ -6,7 +6,6 @@ import requests
 import mlrose
 import numpy as np
 
-
 my_API_key = "AIzaSyAsehbprMSCj4Hs1aquw2yDekqQii2KUYE"
 
 def createDistanceMatrix(places_to_visit):
@@ -47,6 +46,8 @@ def findDistance(v1, v2, distance_matrix):
         return pair[2]
 
 def TSP(places_to_visit, duration, dailyDriveTime):
+    print('start distance matrix')
+
     distance_matrix = createDistanceMatrix(places_to_visit)
 
     print('distance matrix done')
@@ -97,11 +98,12 @@ def TSP(places_to_visit, duration, dailyDriveTime):
         # print('travel_time: ', travelTime)
         # print('current_time', current_time)
 
-    print('split over days done')
+    print('Final Itin - split over days done')
+    print(final_itin)
 
     final_itin = orderPlaces(places_to_visit, final_itin)
 
-    print('--- Final Itin ---')
+    print('--- Final Itin DONE ---')
     print(final_itin)
 
     return final_itin

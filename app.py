@@ -19,8 +19,7 @@ app_data = {
     "name":         "Trip Planner",
     "transition":  "Lets get started",
     "html_title":   "Trip Planner App",
-    "project_name": "CSE 6242 - Trip Planner",
-    "keywords":     "flask, webapp, template, basic"
+    "project_name": "CSE 6242 - Trip Planner"
 }
 
 group_form_data = {}
@@ -37,6 +36,8 @@ votingResults = {}
 memberPreferencesInit = {'tourist':0, 'museum':0, 'amusement_park':0, 'natural':0,
                          'tour':0, 'zoo':0, 'casino':0,'food':0}
 
+N_COUNT = 20
+
 @app.route('/')
 def index():
     global memberIndex
@@ -52,6 +53,7 @@ def voting():
 @app.route('/grouplanding',  methods=('GET', 'POST'))
 def grouplanding():
     global group_form_data
+    global N_COUNT
     form = forms.GroupForm()
     if form.validate_on_submit():
         print('success')
@@ -61,6 +63,14 @@ def grouplanding():
         group_form_data['distance'] = int(form.distance.data)
         group_form_data['duration'] = int(form.duration.data)
         group_form_data['driveTime'] = float(form.driveTime.data)
+        days = group_form_data['duration']
+        if days <=2:
+            N_COUNT = 12
+        elif days == 3:
+            N_COUNT = 16
+        else:
+            N_COUNT = 20
+        print("N_COUNT:", N_COUNT)
         print(group_form_data)
         return render_template('groupindividualname.html', app_data=app_data, group_data=group_form_data, getStarted = True)
     print('no success')
@@ -126,12 +136,12 @@ def preferenceGather():
     print('negative_categories')
     print(negative_categories)
 
-    filtered_dataset = suggestions.output_dataset(coords, max_distance, negative_categories, positive_categories)
+    filtered_dataset = suggestions.output_dataset(coords, max_distance, negative_categories, positive_categories, N_COUNT)
     filtered_dataset['categories'] = filtered_dataset['categories'].apply(util.parseCategories)
     # filtered_dataset['photo_url'] = filtered_dataset['place_id'].apply(util.getPlaceImageURL)
-    filtered_dataset.to_csv('assets/suggestions/' + group_form_data['groupName'] + '.csv', index=False)
+    filtered_dataset.to_csv('assets/suggestions/top20.csv', index=False)
 
-    # filtered_dataset = pd.read_csv('assets/suggestions/sad.csv')
+    # filtered_dataset = pd.read_csv('assets/suggestions/top20.csv')
     # filtered_dataset['categories'] = filtered_dataset['categories'].apply(util.parseCategories)
 
 
@@ -155,9 +165,8 @@ def testVoting():
     global votingResults
 
     values = []
-    for idx in range(20):
+    for idx in range(N_COUNT):
         values.append(request.form[str(idx)])
-
 
     print('values', values)
 
@@ -166,14 +175,17 @@ def testVoting():
 
     print('votingResults', votingResults)
 
-    filtered_dataset = pd.read_csv('assets/suggestions/sad.csv')
+    filtered_dataset = pd.read_csv('assets/suggestions/top20.csv')
     filtered_dataset['categories'] = filtered_dataset['categories'].apply(util.parseCategories)
 
     if memberIndex >= group_form_data['groupSize']:
-        ballot_arr = np.zeros(20).astype(int)
+        print("----------  start  ----------")
+        ballot_arr = np.zeros(N_COUNT).astype(int)
         ballot_match = []
         for member_idx in votingResults:
             ballot_arr = ballot_arr + np.array(votingResults[member_idx]).astype(int)
+
+        print("ballot_arr", ballot_arr)
 
         placeIds = filtered_dataset['place_id'].to_numpy()
         for place_idx, placeId in enumerate(placeIds):
@@ -181,16 +193,19 @@ def testVoting():
 
         sorted_ballots = sorted(ballot_match, key=lambda x: -x[1])
 
+        print("sorted_ballots", sorted_ballots)
+
         sorted_placeIds = []
         for pair in sorted_ballots:
             sorted_placeIds.append(pair[0])
 
-        print("sorted_placeIds", sorted_placeIds)
+        print("final sorted_placeIds", sorted_placeIds)
 
         final_itin = TSP.TSP(sorted_placeIds, group_form_data['duration'], group_form_data['driveTime'])
 
+        print(final_itin)
 
-        return render_template('index.html', app_data=app_data)
+        return render_template('/index.html', app_data=app_data)
 
     return render_template('voting.html', app_data=app_data, group_data=group_form_data, memberIndex=memberIndex, memberInfo=memberInfo,
                            tables=[filtered_dataset.to_html(classes='data', header="true")],

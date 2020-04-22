@@ -5,8 +5,6 @@ import ast
 
 dataset = pd.read_csv('assets/final_dataset_sorted.csv')
 
-suggestion_count = 20
-
 def compileMemberInfo(memberInfo):
     catagory_mapping = {'tourist': ['tourist_attraction'], 'museum': ['museum', 'art_gallery'],
                         'amusement_park': ['amusement_park'], 'natural': ['natural_feature', 'campground'],
@@ -88,7 +86,7 @@ def relevance_score(data, negative_preferences, positive_preferences):
     data = data.drop(["index"], axis=1)
     return data
 
-def output_dataset(initial_coords, maximum_distance, negative_categories, positive_categories):
+def output_dataset(initial_coords, maximum_distance, negative_categories, positive_categories, suggestion_count):
     data = limit_travel_radius(initial_coords, maximum_distance, dataset)
     negative_preferences= combine_preferences(negative_categories)
     positive_preferences = combine_preferences(positive_categories)
