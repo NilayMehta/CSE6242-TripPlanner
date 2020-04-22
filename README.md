@@ -1,4 +1,6 @@
 # CSE6242-TripPlanner
+Trip Planner is all about creating the perfect road trip. Our application collects and analyzes each group member's preferences to create the perfect itinerary for your next trip. Get started with planning your next road trip now!
+
 I would recommend using a virutal env to run the project, but it's not required. To run it inside of a virtual env, follow these steps:
 1. run 'python3 -m venv venv'
 2. run 'source venv/bin/activate' to activate virtual env (this works on Mac OSX, for windows I think its 'venv\Scripts\activate')
