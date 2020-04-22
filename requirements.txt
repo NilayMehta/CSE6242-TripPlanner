@@ -7,3 +7,4 @@ numpy
 geopy
 python-google-places
 googlemaps
+certifi

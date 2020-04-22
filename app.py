@@ -9,9 +9,14 @@ import TSP
 import suggestions
 import util
 import forms
+# from geopy.geocoders import Nominatim
+import geopy.geocoders
 from geopy.geocoders import Nominatim
 import pandas as pd
 import numpy as np
+
+import certifi
+import ssl
 
 app = Flask(__name__)
 
@@ -122,7 +127,12 @@ def preferenceGather():
     positive_categories, negative_categories = suggestions.compileMemberInfo(memberInfo)
 
     max_distance = int(group_form_data['distance'])
-    geolocator = Nominatim(user_agent='myapplication')
+
+    ctx = ssl.create_default_context(cafile=certifi.where())
+    geopy.geocoders.options.default_ssl_context = ctx
+    geolocator = Nominatim(scheme='http')
+
+    # geolocator = Nominatim(user_agent='myapplication')
     location = geolocator.geocode(group_form_data['startCity'])
     lat = float(location.raw['lat'])
     lon = float(location.raw['lon'])
