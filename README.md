@@ -12,6 +12,8 @@ A video demo of our application can be found here!
 
 ## Installation/Execution
 
+YOU NEED AN EXTENSION TO RUN
+
 In order to set up our project, please download our repository. Once you have have the project downloaded or cloned please follow the following steps (Please ensure that Python 3 is installed on your local machine):
 
 1. Change directory into project
