@@ -9,9 +9,9 @@ https://youtu.be/Ih7Qt_MlxKY
 
 NOTE: We have uploaded a temprory API key to the project. To limit credit use, we will keep it active until May 1st for grading purposes. After this date, we will deactivate the key and the user will have to supply their own. 
 
-This is a Flask project that runs on Python 3 with standard HTML and JS packages. As a overview of the files within the package,here is a breakdown of important files and their function:
-
 ### Project Breakdown
+
+This is a Flask project that runs on Python 3 with standard HTML and JS packages. As a overview of the files within the package, here is a breakdown of important files and their function:
 
 App.py
 
