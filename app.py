@@ -215,7 +215,7 @@ def testVoting():
 
         print(final_itin)
 
-        return render_template('/index.html', app_data=app_data)
+        return render_template('/map.html', places=final_itin)
 
     return render_template('voting.html', app_data=app_data, group_data=group_form_data, memberIndex=memberIndex, memberInfo=memberInfo,
                            tables=[filtered_dataset.to_html(classes='data', header="true")],
