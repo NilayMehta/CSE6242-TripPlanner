@@ -3,6 +3,7 @@
 
 from flask import Flask, render_template, request, flash, url_for
 import copy
+import string
 from werkzeug.utils import redirect
 
 import TSP
@@ -211,11 +212,48 @@ def testVoting():
 
         print("final sorted_placeIds", sorted_placeIds)
 
-        final_itin = TSP.TSP(sorted_placeIds, group_form_data['duration'], group_form_data['driveTime'])
+        final_itin, final_itin_indexes = TSP.TSP(sorted_placeIds, group_form_data['duration'], group_form_data['driveTime'])
+
+        # final_itin_indexes = [[7, 11, 6, 16, 12], [9, 18], [17, 3, 10, 8, 5, 15, 2, 1], [0, 4, 19, 13]]
+        # final_itin = [['ChIJhWYGm0wD2YgRFcw6YoMU1P4', 'ChIJdR_OXS4A2YgRtzq7jla_nZM', 'ChIJOY6sqC4A2YgRh300hmHIU-8', 'ChIJ1TVM9DGg2YgRZ8aO0EX15tk', 'ChIJJTjxenrd2YgRmQ9YjR2nXNw'], ['ChIJndCi02ut2YgRgQiu2Kn9irk', 'ChIJEWH5pMs514gR4v1h7Ob5i-k'], ['ChIJg8qVGJq22YgRgnRfn3-HvOY', 'ChIJFY7wCsjD2YgRn8R_2IMRjtw', 'ChIJoVWX_Rm02YgRllHsIZGN16c', 'ChIJab3yr6C22YgRdh8TY4oVu_w', 'ChIJAUUpLJq22YgRAU604E8-tsM', 'ChIJLx5iM6222YgR2ubX5fvu4ts', 'ChIJD21Nxwsf2YgRChKXwM5KZpo', 'ChIJE5jqT1222YgR4STdDoStYPg'], ['ChIJ98BffLK22YgRsymdIvOgjNA', 'ChIJ2f1pZPkA2YgRw01q-hlXoTQ', 'ChIJIZov-vXW2IgRL9M9Xy79wOI', 'ChIJJYiDRgcx2YgRWQ9Vze8pUXk']]
+        #
+
+        print("final_itin", final_itin)
+        print("final_itin_indexes", final_itin_indexes)
+
+        flat_list = [item for sublist in final_itin_indexes for item in sublist]
+        print("--- before---")
+        print(filtered_dataset)
+
+        filtered_dataset = filtered_dataset.reindex(flat_list)
+        print("--- after---")
+        print(filtered_dataset)
+
+        filtered_dataset['day'] = np.nan
+        filtered_dataset['letter'] = ""
+
+        # days_col = np.zeros(len(flat_list))
+
+        for day_idx, day_arr in enumerate(final_itin_indexes):
+            for val in day_arr:
+                # days_col[val] = day_idx
+                filtered_dataset.at[val, 'days'] = day_idx + 1
+
+        letter_index = 0
+        for index, row in filtered_dataset.iterrows():
+            filtered_dataset.loc[index, 'letter'] = string.ascii_uppercase[letter_index]
+            # row['letter'] = string.ascii_uppercase[letter_index]
+            letter_index += 1
+
+
+        # filtered_dataset['day'] = days_col
+
+        print("--- after days col---")
+        print(filtered_dataset['days'])
 
         print(final_itin)
 
-        return render_template('/map.html', places=final_itin)
+        return render_template('/map.html', places=final_itin, group_data=group_form_data, app_data=app_data, suggestions=filtered_dataset, memberIndex=memberIndex-1, memberInfo=memberInfo)
 
     return render_template('voting.html', app_data=app_data, group_data=group_form_data, memberIndex=memberIndex, memberInfo=memberInfo,
                            tables=[filtered_dataset.to_html(classes='data', header="true")],

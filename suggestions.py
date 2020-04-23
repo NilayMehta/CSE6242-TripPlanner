@@ -36,7 +36,8 @@ def compileMemberInfo(memberInfo):
 def limit_travel_radius(initial_coords, maximum_distance, data):
     list_index=[]
     for i in range (len(data)):
-        coords_data = (dataset.iloc[i].lat, dataset.iloc[i].lng)
+        # coords_data = (dataset.iloc[i].lat, dataset.iloc[i].lng)
+        coords_data = (data.iloc[i].lat, data.iloc[i].lng)
         if geopy.distance.distance(initial_coords, coords_data).miles > maximum_distance:
             list_index.append(i)
     data_new = data.drop(list_index)
@@ -57,7 +58,9 @@ def combine_preferences(categories_list):
 
 
 def relevance_score(data, negative_preferences, positive_preferences):
-    max_nb_rating = int(dataset.iloc[0].number)
+    # max_nb_rating = int(dataset.iloc[0].number)
+    max_nb_rating = int(data.iloc[0].number)
+
     list_score = []
 
     for i in range(len(data)):

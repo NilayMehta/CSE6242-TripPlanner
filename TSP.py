@@ -5,6 +5,7 @@ import csv
 import requests
 import mlrose
 import numpy as np
+import copy
 
 my_API_key = "AIzaSyAsehbprMSCj4Hs1aquw2yDekqQii2KUYE"
 
@@ -20,7 +21,7 @@ def createDistanceMatrix(places_to_visit):
             Response = requests.get(req)
             Response = Response.json()
 
-            # pprint.pprint(Response)
+            pprint.pprint(Response)
 
             # pprint.pprint(Response["rows"][0]["elements"][0]["duration"]["value"])
             value = Response["rows"][0]["elements"][0]["duration"]["value"]  # We get the time duration is seconds
@@ -101,9 +102,11 @@ def TSP(places_to_visit, duration, dailyDriveTime):
     print('Final Itin - split over days done')
     print(final_itin)
 
-    final_itin = orderPlaces(places_to_visit, final_itin)
+    final_itin_idxs = copy.deepcopy(final_itin)
+
+    itin_final = orderPlaces(places_to_visit, final_itin)
 
     print('--- Final Itin DONE ---')
-    print(final_itin)
+    print(itin_final)
 
-    return final_itin
+    return itin_final, final_itin_idxs
