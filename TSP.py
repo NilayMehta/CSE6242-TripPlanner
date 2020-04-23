@@ -7,7 +7,7 @@ import mlrose
 import numpy as np
 import copy
 
-my_API_key = "AIzaSyAsehbprMSCj4Hs1aquw2yDekqQii2KUYE"
+my_API_key = "AIzaSyDiIa1mWK2UwXIGb0t-Y06Q9Ts7JyBRk2k"
 
 def createDistanceMatrix(places_to_visit):
     distance_matrix = []
@@ -58,7 +58,7 @@ def TSP(places_to_visit, duration, dailyDriveTime):
     # We want to visit all the places of our list "places_to_visit"
     problem = mlrose.TSPOpt(length = len(places_to_visit), fitness_fn = fitness,
                                 maximize=False)
-    best_state, best_fitness = mlrose.genetic_alg(problem, random_state=0)
+    best_state, best_fitness = mlrose.genetic_alg(problem, random_state=0, pop_size=300, mutation_prob=0.3)
 
     print('melrose done')
     print('best_state', best_state)

@@ -14,7 +14,7 @@ from googleplaces import GooglePlaces, types, lang
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
-my_API_key = 'AIzaSyAsehbprMSCj4Hs1aquw2yDekqQii2KUYE'
+my_API_key = 'AIzaSyDiIa1mWK2UwXIGb0t-Y06Q9Ts7JyBRk2k'
 google_places = GooglePlaces(my_API_key)
 
 voting_suggestions_count = 20
