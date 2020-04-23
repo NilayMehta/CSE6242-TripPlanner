@@ -48,6 +48,12 @@ display each part of the web app.
 
 ## Installation/Execution
 
+IMPORTANT: Please download and install this extension:
+https://chrome.google.com/webstore/detail/moesif-orign-cors-changer/digfbfaphojjndkpccljibejjbppifbc?hl=en-US
+Once it is installed, please enable it before using our App. On the map page of our application, 
+we need to make external calls to Google's Maps API, and this extension resolves any potential browser issues that might 
+occur during that process.
+
 In order to set up our project, please download our repository. Once you have have the project downloaded or cloned please follow the following steps (Please ensure that Python 3 is installed on your local machine):
 
 1. Change directory into project
@@ -74,12 +80,9 @@ WIndows: `'venv\Scripts\activate'`
 
 The application should now be operational! 
 
-IMPORTANT: As a last step, please download and install this extension:
-https://chrome.google.com/webstore/detail/moesif-orign-cors-changer/digfbfaphojjndkpccljibejjbppifbc?hl=en-US
-Once it is installed, please enable it before using our App. On the map page of our application, 
-we need to make external calls to Google's Maps API, and this extension resolves any potential browser issues that might 
-occur during that process.
+It can be accessed at http://127.0.0.1:5000/
+
 
 To speed things up, we have prepopulated some of the form fields like group 
 information("Group Name", "Number of members", etc.) to make it quicker for the tester to use the application! 
-It can be accessed at http://127.0.0.1:5000/
+
