@@ -11,6 +11,8 @@ NOTE: We have uploaded a temprory API key to the project. To limit credit use, w
 
 This is a Flask project that runs on Python 3 with standard HTML and JS packages. As a overview of the files within the package,here is a breakdown of important files and their function:
 
+### Project Breakdown
+
 App.py
 
 This file contains the majority of the functional logic for routing within the web app. It initializes and stores data 
